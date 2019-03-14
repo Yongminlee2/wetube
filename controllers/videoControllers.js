@@ -1,5 +1,5 @@
-const home = (req,res) => res.send('Home');
-const search = (req,res) => res.send('Search');
+const home = (req,res) => res.render('home');
+const search = (req,res) => res.render('Search');
 
 
 export {home,search};
