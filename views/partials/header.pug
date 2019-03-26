@@ -6,8 +6,16 @@ header.header
         form(action=routes.search,method="get")
             input(type="text",placeholder="Search by term...",name="term")
     .header__column
-        ul  
-            li
-                a(href=routes.join) Join
-            li
-                a(href=routes.login) Log in
+        ul
+            if !user.isAuthenticated
+                li
+                    a(href=routes.join) Join
+                li
+                    a(href=routes.login) Log in
+            else
+                li
+                    a(href=`/videos${routes.upload}`) Upload
+                li
+                    a(href=routes.userDetail(user.id)) profile
+                li
+                    a(href=routes.logout) Log Out
