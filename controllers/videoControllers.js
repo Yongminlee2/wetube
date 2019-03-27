@@ -1,7 +1,15 @@
 import routes from "../routes";
+import Video from "../models/Video"
 
-const home = (req,res) => {
-    res.render('home',{pageTitle:"home",videos});
+const home = async (req,res) => { //async 함수 동기화 한다는 말임
+    try {
+        const videos = await Video.find({}); //await video를 db에서 다찾을떄까지 대기
+        //throw Error("laalal");
+        res.render('home',{pageTitle:"home",videos});
+    } catch (error) {
+        console.log(`ERROR : ${error}`);
+        res.render('home',{pageTitle:"home",videos: []});
+    }
 };
 
 const search = (req,res) => {
@@ -19,11 +27,11 @@ const getupload = (req,res) => {
     res.render('upload',{pageTitle:"Upload"})
 };
 const postupload = (req,res) => {
-    const {
-        body:{file,title,desciption}
-    } = req;
+    const {body,file} = req;
+    console.log(file,body);
+    res.render('upload',{pageTitle:"Upload"})
     // To Do: Upload and save video
-    res.redirect(routes.videoDetail(324393));
+    //res.redirect(routes.videoDetail(324393));
 };
 
 const videoDetail = (req,res) => res.render('videoDetail',{pageTitle:"Video Detail"});
