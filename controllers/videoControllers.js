@@ -26,15 +26,26 @@ const search = (req,res) => {
 const getupload = (req,res) => {
     res.render('upload',{pageTitle:"Upload"})
 };
-const postupload = (req,res) => {
-    const {body,file} = req;
-    console.log(file,body);
-    res.render('upload',{pageTitle:"Upload"})
-    // To Do: Upload and save video
-    //res.redirect(routes.videoDetail(324393));
+const postupload = async (req,res) => {
+    const {
+        body: {title,description},
+        file : {path}
+    } = req;
+
+    const newVideo = await Video.create({
+        fileUrl: path,
+        title,
+        description
+    });
+    
+    res.redirect(routes.videoDetail(newVideo.id));
 };
 
-const videoDetail = (req,res) => res.render('videoDetail',{pageTitle:"Video Detail"});
+const videoDetail = (req,res) => {
+    console.log(req.params);
+    res.render('videoDetail',{pageTitle:"Video Detail"})
+};
+
 const editVideo = (req,res) => res.render('editVideo',{pageTitle:"Edit Video"});
 const deleteVideo = (req,res) => res.render('deleteVideo',{pageTitle: "Delete Video"});
 

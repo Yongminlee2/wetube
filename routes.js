@@ -41,8 +41,10 @@ const routes = {
     upload : UPLOAD,
     videoDetail :id => {
         if (id) {
+            console.log('1번');
             return `/videos/${id}`;
         } else {
+            console.log('2번');
             return VIDEO_DETAIL;
         }
     },

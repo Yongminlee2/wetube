@@ -13,6 +13,7 @@ const app = express();
 
 app.use(helmet());
 app.set('view engine' , 'pug');
+app.use("/uploads",express.static("uploads"))//directory 에서 파일을 보내주는 middleware
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
