@@ -3,7 +3,10 @@ import Video from "../models/Video"
 
 const home = async (req,res) => { //async 함수 동기화 한다는 말임
     try {
-        const videos = await Video.find({}); //await video를 db에서 다찾을떄까지 대기
+        const videos = await Video.find({}).sort({_id:-1}); 
+        //await video를 db에서 다찾을떄까지 대기
+        //sort _id:-1 순서를 거꾸로 하겠다는 의미 desc
+
         //throw Error("laalal");
         res.render('home',{pageTitle:"home",videos});
     } catch (error) {
@@ -41,13 +44,57 @@ const postupload = async (req,res) => {
     res.redirect(routes.videoDetail(newVideo.id));
 };
 
-const videoDetail = (req,res) => {
-    console.log(req.params);
-    res.render('videoDetail',{pageTitle:"Video Detail"})
+const videoDetail = async(req,res) => {
+    const {
+        params:{id} 
+    } =req;
+    try {
+        const video = await Video.findById(id);
+        //mongoose 가 url의 id 값을 인자로 넣어주면 _id값과 매핑되는지 자동으로 찾는다
+        res.render('videoDetail',{pageTitle:video.title,video})
+    } catch (error) {
+        console.log(error);
+        res.redirect(routes.home);
+    }
 };
 
-const editVideo = (req,res) => res.render('editVideo',{pageTitle:"Edit Video"});
-const deleteVideo = (req,res) => res.render('deleteVideo',{pageTitle: "Delete Video"});
+const geteditVideo = async(req,res) => {
+    const {
+        params: {id}
+    } = req;
+    try{
+        const video =await Video.findById(id);
+        res.render('editVideo',{pageTitle:`Edit ${video.title}`,video});
+    } catch(error){
+        res.redirect(routes.home);
+    }
+};
+
+const posteditVideo = async (req,res) => {
+    const {
+        params: {id},
+        body : {title,description}
+    } = req;
+    try {
+        await Video.findOneAndUpdate({_id:id},{title,description});
+        res.redirect(routes.videoDetail(id));
+    } catch (error) {
+        res.redirect(routes.home);
+    }
+
+};
 
 
-export {getupload,postupload,home,search,videoDetail,editVideo,deleteVideo};
+const deleteVideo = async (req,res) => {
+    const {
+        params:{id}
+    } = req;
+    try {
+        await Video.findOneAndRemove({_id:id});
+    } catch (error) {
+        console.log(error);
+    }
+    res.redirect(routes.home);
+}
+
+export {getupload,postupload,home,search,videoDetail,geteditVideo,posteditVideo,deleteVideo};
