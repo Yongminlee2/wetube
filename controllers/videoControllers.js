@@ -21,7 +21,13 @@ const search = (req,res) => {
         query: {term : searchingBy}
         } = req;
     //위와 동일 const searchingBy = {searchingBy : req.query.term};
-
+    
+    let videos = [];    
+    try {
+        videos = await Video.find({title : searchingBy});
+    } catch (error) {
+        console.log(error);
+    }
     res.render('Search',{pageTitle:"Search",searchingBy,videos});
 };
 
