@@ -15,7 +15,7 @@ const home = async (req,res) => { //async 함수 동기화 한다는 말임
     }
 };
 
-const search = (req,res) => {
+const search = async (req,res) => {
     //console.log(req.query.term); //serach.pug 의 input get 방식 값을 가져옴
     const {
         query: {term : searchingBy}
@@ -24,7 +24,7 @@ const search = (req,res) => {
     
     let videos = [];    
     try {
-        videos = await Video.find({title : searchingBy});
+        videos = await Video.find({title : {$regex:searchingBy, $options:"i"}}); //정규식으로 select 쿼리 노래제목검색
     } catch (error) {
         console.log(error);
     }
