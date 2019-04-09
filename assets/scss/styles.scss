@@ -1,4 +1,9 @@
-@import "./config/_variables.scss";
-body{
-    background-color: $sexyColor;
-}
+@import "config/_variables.scss";
+@import "config/reset.scss";
+@import "main.scss";
+
+//_를 붙인이유는 scss 문법을 사용하고
+//css 문법을 사용한곳엔 _ 를 붙이지 않았다.
+
+@import "partials/header.scss";
+@import "partials/footer.scss";
