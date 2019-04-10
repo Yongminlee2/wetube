@@ -36,7 +36,7 @@
     "nodemon": "^1.18.10"
   },
   "scripts": {
-    "dev:server": "nodemon --exec babel-node init.js --delay 2",
+    "dev:server": "nodemon --exec babel-node init.js --delay 2 --ignore 'scss' ",
     "dev:assets": "webpack --mode development -w",
     "build:assets": "webpack --mode production"
   },
