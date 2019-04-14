@@ -6,7 +6,7 @@ import { getjoin,postjoin,getLogin,postLogin,logout } from "../controllers/userC
 const globalRouter = express.Router();
 
 globalRouter.get(routes.join,getjoin);
-globalRouter.post(routes.join,postjoin);
+globalRouter.post(routes.join,postjoin,postLogin);
 
 globalRouter.get(routes.login,getLogin);
 globalRouter.post(routes.login,postLogin);
