@@ -4,6 +4,7 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import passport from "passport";
+import session from "express-session";
 import globalRouter from "./routers/globalRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
@@ -22,6 +23,17 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(morgan("dev"));
+app.use(session({
+    secret: process.env.COOKIE_SECRET,
+    resave: true,
+    saveUninitialized : false
+})
+);
+
+//resave 는 세션을 강제로 저장하게 합니다.
+//saveUninitialized 는 초기화 되지 않은 (uninitialized) 세션을 저장소에 저장합니다.
+//새로운 세션이지만 변경되지 않은 세션은 초기화 하지 않습니다.
+//로그인 session에 이용하려면 false가 좋다
 app.use(passport.initialize());
 app.use(passport.session());
 

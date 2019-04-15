@@ -11,6 +11,7 @@ passport.serializeUser(User.serializeUser()); //쿠키에 user.id 를 담는다
 
 passport.deserializeUser(User.deserializeUser()); //그 id로 사용자를 식별한다
 //deserialization 어느사용자인지 어떻게 찾는가? 쿠키에 저장되어있는 userid로 어떻게 사용자를찾느냐를 의미
+//세션이 쿠키를 해독해서 쿠키를 저장한걸로 세션이 찾는다
 
 /*아래 코드를 줄여서 User.createStrategy() 이걸로 한줄 사용할수 있다.
 passport.use(new LocalStrategy(
