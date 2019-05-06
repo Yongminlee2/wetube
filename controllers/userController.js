@@ -45,7 +45,7 @@ const postLogin = passport.authenticate('local',{
 const githubLogin = passport.authenticate("github");
 
 const githubLoginCallback = async (accessToken, refreshToken, profile, cb) => {
-    console.log(profile);
+    //console.log(profile);
     const {_json : { id, avatar_url: avatarUrl, name, email}} = profile;
     try {
         const user = await User.findOne({email}); //_json의 email과 몽고db의 email이 같은게 있는가를 찾는다
@@ -93,7 +93,7 @@ const logout = (req,res) => {
     res.redirect(routes.home);
 }
 
-const me = (req,res) => {
+const getMe = (req,res) => {
     res.render('userDetail',{pageTitle:"User Detail",user : req.user});
     //req.user 는 현재 로그인된 사용자
 }
@@ -111,4 +111,4 @@ const userDetail = (req,res) => {
 }
 
 
-export {getjoin,postjoin,getLogin,postLogin,logout,userDetail,editprofile,changePassword,githubLoginCallback,githubLogin,postGithubLogIn};
+export {getMe,getjoin,postjoin,getLogin,postLogin,logout,userDetail,editprofile,changePassword,githubLoginCallback,githubLogin,postGithubLogIn};
