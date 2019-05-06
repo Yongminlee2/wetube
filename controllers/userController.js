@@ -106,8 +106,15 @@ const changePassword = (req,res) => {
     res.render('changePassword',{pageTitle:"changepassword"});
 }
 
-const userDetail = (req,res) => {
-    res.render('userDetail',{pageTitle:"User Detail"});
+const userDetail = async (req,res) => {
+    const {params:{id}} = req;
+
+    try {
+        const user = await User.findById(id);
+        res.render('userDetail',{pageTitle:"User Detail" , user});
+    } catch (error) {
+        res.redirect(routes.home);
+    }
 }
 
 
