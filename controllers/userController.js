@@ -45,7 +45,8 @@ const postLogin = passport.authenticate('local',{
 const githubLogin = passport.authenticate("github");
 
 const githubLoginCallback = async (accessToken, refreshToken, profile, cb) => {
-    const {_json : { id, avatar_url, name, email}} = profile;
+    console.log(profile);
+    const {_json : { id, avatar_url: avatarUrl, name, email}} = profile;
     try {
         const user = await User.findOne({email}); //_json의 email과 몽고db의 email이 같은게 있는가를 찾는다
         if(user){
@@ -58,7 +59,7 @@ const githubLoginCallback = async (accessToken, refreshToken, profile, cb) => {
                 email,                           
                 name,
                 githubId : id,
-                avatar_url : avatar_url
+                avatarUrl
             });
             return cb(null,newUser);
 
@@ -92,6 +93,11 @@ const logout = (req,res) => {
     res.redirect(routes.home);
 }
 
+const me = (req,res) => {
+    res.render('userDetail',{pageTitle:"User Detail",user : req.user});
+    //req.user 는 현재 로그인된 사용자
+}
+
 const editprofile = (req,res) => {
     res.render('editprofile',{pageTitle:"Edit Profile"});
 };
@@ -101,7 +107,7 @@ const changePassword = (req,res) => {
 }
 
 const userDetail = (req,res) => {
-    res.render('userDetail',{pageTitle:"userDetail"});
+    res.render('userDetail',{pageTitle:"User Detail"});
 }
 
 

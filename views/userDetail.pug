@@ -4,6 +4,5 @@ include mixins/videoBlock
 block content
     .user-profile
         .user-profile__header
-            h4.profile__username=user.name 
-             |안녕하세여
-        .home-videos
+            img.avatar(src=user.avatarUrl)
+        
