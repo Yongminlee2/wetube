@@ -88,6 +88,21 @@ const postGithubLogIn = (req,res) =>{
     res.redirect(routes.home);
 };
 
+
+const facebookLogin = passport.authenticate('facebook'); 
+//passport로 facebook 으로 보내서 인증 확인
+
+const facebookLoginCallback = (accessToken, refreshToken, profile , cb) =>{
+    console.log(accessToken, refreshToken, profile , cb);
+}
+//facebook 의 user가 있는지 확인하고 계정을 찾아내거나 새로생성
+
+const postFacebookLogin = (req,res) => {
+    res.redirect(routes.home);
+};
+// 마지막은 인증에 성공했을때 redirect 해주는것
+
+
 const logout = (req,res) => {
     req.logout();
     res.redirect(routes.home);
@@ -118,4 +133,4 @@ const userDetail = async (req,res) => {
 }
 
 
-export {getMe,getjoin,postjoin,getLogin,postLogin,logout,userDetail,editprofile,changePassword,githubLoginCallback,githubLogin,postGithubLogIn};
+export {getMe,getjoin,postjoin,getLogin,postLogin,logout,userDetail,editprofile,changePassword,githubLoginCallback,githubLogin,postGithubLogIn,facebookLogin,facebookLoginCallback,postFacebookLogin};
